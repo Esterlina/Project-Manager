@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ProjectManager</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <header class="main-header">
+      <%= link_to root_path do %>
+        <b class="logo">ManagerProjects</b>     
+      <% end %>
+      <nav class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav"> 
+            <% if user_signed_in? %>         
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs"><%= current_user.name%></span>
+                </a>
+              </li>
+               <li class="dropdown tasks-menu">
+                <%= link_to destroy_user_session_path, method: :delete do %>
+                  <i class="fa fa-sign-out-alt"></i>
+                <% end %>
+              </li>
+            <%end%>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <% if user_signed_in? %>
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <ul class="sidebar-menu" data-widget="tree">
+            <% if current_user.type.user_type == 'Admin' %>
+              <li class="header">ADMINISTRACIÓN</li>
+              <li>
+                <%=link_to new_user_registration_path, method: :get do %>
+                  <i class="fa fa-user-plus"></i> <span>Crear nueva cuenta</span>
+                <%end%>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-users-cog"></i>
+                  <span>Administrar cuentas</span>
+                </a>
+              </li>
+            <%end%>
+            <li class="header">MENÚ</li>
+            <li class="active">
+              <a href="#">
+                <i class="fa fa-columns"></i> 
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-tasks"></i> <span>Proyectos</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li>
+                  <a href="#">Proyectos</a>
+                </li>
+                <%if current_user.type.user_type == 'Admin' || current_user.type.user_type == 'Manager' %>
+                  <li>
+                    <%=link_to new_project_path, method: :get do %>
+                      <span>Crear nuevo proyecto</span>
+                    <%end%>
+                  </li>
+                <%end%>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span>Integrantes GL</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+    <%end%>
+    <div align="center">
+      <%= yield %>  
+    </div>
+  </body>
+</html>

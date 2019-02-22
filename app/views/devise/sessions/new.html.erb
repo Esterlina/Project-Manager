@@ -1,0 +1,40 @@
+<div class="login-box">
+  <div class="login-logo">
+    <b>Iniciar sesión</b>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Inicia sesión para ingresar</p>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-group has-feedback">
+          <%= f.email_field :email ,autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Correo eletrónico' %>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <%= f.password_field :password ,autocomplete: "current-password",  class: 'form-control'%>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <% if devise_mapping.rememberable? %>
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <div class="icheckbox_square-blue" style="position: relative;" aria-checked="false" aria-disabled="false">
+                <%= f.check_box :remember_me%><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div> Recuerdame
+            </label>
+          </div>
+        </div>
+        <%end%>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <%= f.submit 'Ingresar', class:"btn btn-primary btn-block btn-flat" %>
+        </div>
+        <!-- /.col -->
+      </div>
+    <%end%>
+    <a href="#">Olvide mi contraseña</a><br>
+  </div>
+</div>
+
+
