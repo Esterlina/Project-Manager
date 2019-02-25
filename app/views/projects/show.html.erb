@@ -1,0 +1,77 @@
+<div class="content-wrapper" >
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<h1 class="box-title"><%= @project.name %> </h1>
+              	<h2 class="box-title">(<%= @project.code%>)</h2>
+              	<div class="col-xs-2 right">
+              		<%=link_to edit_project_path, method: :get do %>
+                      	<div class="btn btn-block btn-primary btn-flat">
+                			<i class="fa fa-pencil-alt icon" ></i> Editar
+              			</div>
+                    <%end%>
+               	</div>
+        	</div>
+        	<div class="box-body">
+        		<div class="box-column">
+        			<div>
+        				<p class="text-muted">
+        					<b>Fecha inicio:</b>
+        					<%= @project.starting_date.strftime('%d/%m/%Y')%>
+        					<b> - Fecha entrega:</b>
+        					<%= @project.ending_date.strftime('%d/%m/%Y')%>
+        				</p>
+        			</div>
+        			<div class="col-xs-12 box-border">
+	        			<p><%= @project.detail %></p>
+        			</div>
+        			<div>
+        				<p class="text-muted">
+        					<b>Sprints estimados:</b>
+        					<%= @project.number_sprints %>
+        				</p>
+        			</div>
+        			<h3>Equipo de trabajo</h3>
+        			<table class="table table-bordered">
+		                <tbody>
+			                <tr>
+			                  <th>Nombre</th>
+			                  <th>Rol</th>
+			                  <th></th>
+			                </tr>
+			                <% @project.users.each do |user| %>
+			                	<% @rol_user = user.get_project_role(@project.id) %>
+			                	<tr> 
+				                  <td><%= user.name %></td>
+				                  <% if @rol_user %>
+				                  	<td>
+				                  		<%= @rol_user.name %> (<%= @rol_user.code %>)
+				                  	</td>
+				                  	<td>
+				                  		<button type="button" class="btn btn-block btn-success btn-sm">Cambiar</button>
+				                  	</td>
+				                  <% else %>
+				                  	<td>No asignado</td>
+				                  	<td>
+				                  		<%=link_to project_set_role_path(:project_id => @project.id,:user_id => user.id), method: :get do %>
+					                      	<div class="btn btn-block btn-success btn-sm">
+					                			<b>Asignar</b>
+					              			</div>
+					                    <%end%>
+					               	</td>
+				                  <%end%>	       
+			  			    	</tr>
+			                <%end%>
+			     		</tbody>
+		          	</table>
+		          	<h3>Servicios</h3>
+		          	<ul>
+		          		<% @project.services.each do |service| %>
+		          			<li><%= service.name %></li>
+		          		<%end%>
+		          	</ul>
+        		</div>
+        	</div>
+		</div>	
+	</div>
+</div>

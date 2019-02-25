@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require adminlte
+//= require modal.min.js
 //= require_tree .
 
 

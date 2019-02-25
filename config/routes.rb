@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :projects
+  resources :projects do
+    get '/set_role/:user_id', to: 'projects#set_role', as: 'set_role'
+    post :update_role
+  end
+  
   devise_for :users, :controllers => {:registrations => "registrations"}
   root 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.
